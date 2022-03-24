@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Food Menu
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="container">
+  <table class="table table-striped text-center">
+    <tr>
+      <th>SR</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th colspan="2">Action</th>
+    </tr>
+
+    {% for food in flist %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td><a class="text-info text-decoration-none text-uppercase"
+          href="/foodapp/fooddetail/{{food.food_Id}}">{{food.food_Name}}</a></td>
+      <td>{{food.food_Price}}</td>
+      <td>
+        <a href="/foodapp/foodupdate/{{food.food_Id}}" class="btn btn-warning">
+          <i class="fas fa-edit"></i>
+        </a>
+      </td>
+      <td>
+        <a href="/foodapp/fooddelete/{{food.food_Id}}" class="btn btn-danger">
+          <i class="fas fa-trash"></i>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+  <div class="modal fade" id="fooddetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Food Information</h5>
+        </div>
+        <div class="modal-body">
+          <table class="table table-borderless">
+            <tr>
+              <th>Food Id</th>
+              <td> {{object.food_Id}}</td>
+            <tr>
+              <th>Food Name</th>
+              <td>{{object.food_Name}}</td>
+            <tr>
+              <th>Food Price</th>
+              <td> {{object.food_Price}}</td>
+            <tr>
+              <th>Food Description</th>
+              <td> {{object.food_Description}}</td>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <a href="/foodapp/foodlist" class="btn btn-secondary">Ok</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if object %}
+<script>
+  $(function () {
+    $('#fooddetail').modal('show');
+  })
+</script>
+{% endif %}
+{% endblock %}
